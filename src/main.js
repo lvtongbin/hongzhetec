@@ -14,6 +14,8 @@ import App from './App'
 import store from './store'
 import router from './router'
 
+import moment from 'moment' // 导入模块
+
 import './icons' // icon
 import './permission' // permission control
 import './utils/error-log' // error log
@@ -44,6 +46,9 @@ Object.keys(filters).forEach(key => {
 })
 
 Vue.config.productionTip = false
+
+moment.locale('zh-cn') // 设置语言 或 moment.lang('zh-cn');
+Vue.prototype.$moment = moment// 赋值使用
 
 new Vue({
   el: '#app',
