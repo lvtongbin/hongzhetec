@@ -131,12 +131,23 @@
       @size-change="handleSizeChange"
       @current-change="handleCurrentChange"
     />
+    <div style="height: 500px">
+      <Condition :condition="condition" class="condition" />
+      <AlarmList :alarm-list="alarmList" class="alarmlist" />
+    </div>
+    <el-divider />
+    <div class="bottom">
+      <el-button type="info" round @click="onNext">下一页</el-button>
+    </div>
   </div>
 </template>
 
 <script>
-import { list } from '@/api/intra-analysis'
+import { list, fetchCondition, fetchAlarmList } from '@/api/intra-analysis'
+import Condition from './Condition'
+import AlarmList from './AlarmList'
 export default {
+  components: { Condition, AlarmList },
   props: {
     value: {
       type: String,
@@ -162,7 +173,9 @@ export default {
       total: 0,
       tableData: [{
         analysis_status: 12
-      }]
+      }],
+      condition: null,
+      alarmList: []
     }
   },
   computed: {
@@ -176,7 +189,7 @@ export default {
     }
   },
   beforeMount() {
-    this.updateList()
+    this.updateList(true)
   },
   methods: {
     handleSizeChange(val) {
@@ -189,9 +202,12 @@ export default {
       this.updateList()
     },
     onSubmit() {
-      console.log(this.filter)
+      this.updateList()
     },
-    updateList() {
+    onNext() {
+      this.$emit('next')
+    },
+    updateList(frist) {
       const { filter } = this
       list(filter).then(response => {
         const { code, data } = response
@@ -215,8 +231,35 @@ export default {
           }
         })
         this.tableData = tableData
+        if (frist) {
+          this.updateCondition(0)
+          this.updateAlarmList(0)
+        }
       }).catch(error => {
-        // reject(error)
+        console.log(error)
+      })
+    },
+    updateCondition(record) {
+      fetchCondition(record).then(response => {
+        const { code, data } = response
+        if (code !== 0) {
+          // TO DO
+        }
+        this.condition = data
+        this.$store.commit('analysis/SET_CONDITION', data)
+      }).catch(error => {
+        console.log(error)
+      })
+    },
+    updateAlarmList(record) {
+      fetchAlarmList(record).then(response => {
+        const { code, data } = response
+        if (code !== 0) {
+          // TO DO
+        }
+        console.log(data.list)
+        this.alarmList = data.list
+      }).catch(error => {
         console.log(error)
       })
     }
@@ -240,5 +283,18 @@ export default {
   }
   .select-button {
     padding-top: 45px;
+  }
+  .condition {
+    float: left;
+    width: 800px;
+  }
+  .alarmlist {
+    width: calc(100% - 800px);
+    float: left;
+  }
+  .bottom {
+    position: absolute;
+    right: 0;
+    padding-right: 80px;
   }
 </style>
