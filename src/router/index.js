@@ -127,7 +127,7 @@ export const constantRoutes = [
         path: 'analysis',
         component: () => import('@/views/procedural/index'),
         name: 'Analysis',
-        meta: { title: '程序化分析', icon: 'icon', noCache: true }
+        meta: { title: '程式化分析', icon: 'icon', noCache: true }
       }
     ]
   },
@@ -137,7 +137,7 @@ export const constantRoutes = [
     children: [
       {
         path: 'analysis',
-        component: () => import('@/views/error-page/404'),
+        component: () => import('@/views/history-analysis/index'),
         name: 'Analysis',
         meta: { title: '历史数据分析', icon: 'tab' }
       }

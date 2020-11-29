@@ -68,10 +68,21 @@
       </el-form-item>
     </el-form>
     <el-table
+      ref="singleTable"
       :data="tableData"
+      highlight-current-row
       style="width: 100%;"
       height="500"
+      @row-click="chooseone"
+      @current-change="handleSelectionChange"
     >
+      <el-table-column
+        width="55"
+      >
+        <template slot-scope="scope">
+          <el-checkbox v-model="scope.row.checked" />
+        </template>
+      </el-table-column>
       <el-table-column
         prop="index"
         label="序号"
@@ -137,7 +148,7 @@
     </div>
     <el-divider />
     <div class="bottom">
-      <el-button type="info" round @click="onNext">下一页</el-button>
+      <el-button type="primary" @click="startAnalysis(currentRowId)">开始分析</el-button>
     </div>
   </div>
 </template>
@@ -175,7 +186,10 @@ export default {
         analysis_status: 12
       }],
       condition: null,
-      alarmList: []
+      alarmList: [],
+      currentRowId: null,
+      checked: null
+      // currentSelectItem: {}
     }
   },
   computed: {
@@ -192,6 +206,30 @@ export default {
     this.updateList(true)
   },
   methods: {
+    // 点击“开始分析”按钮，获取到选择的某一行的数据记录id，并更新Vuex中存储的工况信息
+    startAnalysis(currentRowId) {
+      this.$emit('next')
+      console.log(currentRowId)
+      this.updateCondition(currentRowId)
+      // fetchCondition(currentRowId).then(res=>{
+      //   res.data
+      //   console.log(res.data.train_mode)
+      //   console.log(res.data.train_number)
+      //   })
+    },
+    handleSelectionChange(row) {
+      this.tableData.forEach(item => { // 每次选择时把其他选项都清除
+        if (item.id !== row.id) {
+          item.checked = false
+        }
+      })
+      // console.log(row)
+      this.currentSelectItem = row
+    },
+    chooseone(row) {
+      this.currentRowId = row.id
+      // console.log(row.id)
+    },
     handleSizeChange(val) {
       this.filter.pageNum = 1
       this.filter.pageSize = val
@@ -204,9 +242,6 @@ export default {
     onSubmit() {
       this.updateList()
     },
-    onNext() {
-      this.$emit('next')
-    },
     updateList(frist) {
       const { filter } = this
       list(filter).then(response => {
@@ -217,6 +252,7 @@ export default {
         this.total = data.total
         var tableData = data.list.map((item, index) => {
           return {
+            id: item.id,
             index: 1 + index + (filter.pageNum - 1) * filter.pageSize,
             status: item.analysis_status === true ? '已分析' : '未分析',
             mode: item.train_mode,
@@ -230,6 +266,9 @@ export default {
             analysts: item.analysts
           }
         })
+        tableData.forEach(item => {
+          item.checked = false
+        })
         this.tableData = tableData
         if (frist) {
           this.updateCondition(0)
@@ -242,6 +281,8 @@ export default {
     updateCondition(record) {
       fetchCondition(record).then(response => {
         const { code, data } = response
+        // console.log(code)
+        // console.log(data)
         if (code !== 0) {
           // TO DO
         }

@@ -3,16 +3,18 @@ const { param2Obj } = require('./utils')
 
 const user = require('./user')
 const role = require('./role')
-const article = require('./article')
+// const article = require('./article')
 const search = require('./remote-search')
 const analysis = require('./intra-analysis')
+const history=require('./history-analysis')
 
 const mocks = [
   ...user,
   ...role,
-  ...article,
+  // ...article,
   ...search,
-  ...analysis
+  ...analysis,
+  ...history
 ]
 
 // for front mock
