@@ -2,6 +2,7 @@
   <div class="alarm-list-container">
     <el-table
       :data="alarmList"
+      :header-cell-style="{background:'#eef1f6',color:'#606266'}"
       style="width: 100%;"
       height="500"
     >

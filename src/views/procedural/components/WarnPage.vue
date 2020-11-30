@@ -4,6 +4,7 @@
     <el-divider />
     <el-table
       :data="failureList"
+      :header-cell-style="{background:'#eef1f6',color:'#606266'}"
       style="width: 100%;"
       height="500"
     >
@@ -41,6 +42,7 @@
     />
     <el-table
       :data="failureList"
+      :header-cell-style="{background:'#eef1f6',color:'#606266'}"
       style="width: 100%;"
       height="500"
     >
@@ -49,20 +51,30 @@
         label="序号"
       />
       <el-table-column
-        prop="type"
-        label="故障内容"
-      />
-      <el-table-column
         prop="axis"
-        label="故障轴号"
+        label="轴号"
       />
       <el-table-column
         prop="senor"
-        label="故障位号"
+        label="位号"
+      />
+      <el-table-column
+        prop="type"
+        label="报警内容"
       />
       <el-table-column
         prop="count"
-        label="故障次数"
+        label="报警时间"
+        width="180"
+      />
+      <el-table-column
+        prop="count"
+        label="最高轴温"
+        width="180"
+      />
+      <el-table-column
+        prop="count"
+        label="最大温升"
         width="180"
       />
     </el-table>

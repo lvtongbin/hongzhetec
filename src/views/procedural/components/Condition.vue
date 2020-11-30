@@ -2,25 +2,26 @@
   <div class="condition-container">
     <div>{{ title }}</div>
     <div v-if="condition != null">
-      <table>
+
+      <table border="1" cellspacing="0">
         <tr>
-          <td>温度数据</td>
+          <td class="head_td">温度数据</td>
           <td>{{ condition.has_temp_data?'有':'无' }}</td>
-          <td>振动数据</td>
+          <td class="head_td">振动数据</td>
           <td>{{ condition.has_vibration_data?'有':'无' }}</td>
-          <td>转速</td>
+          <td class="head_td">转速</td>
           <td>{{ condition.spech_state===1?'正常':'异常' }}</td>
         </tr>
         <tr>
-          <td>超温报警</td>
+          <td class="head_td">超温报警</td>
           <td>{{ condition.over_temp_alarm_cnt }}次</td>
-          <td>振动报警</td>
-          <td>齿轮</td>
-          <td>轴承</td>
-          <td>踏面</td>
+          <td class="head_td">振动报警</td>
+          <td class="head_td">齿轮</td>
+          <td class="head_td">轴承</td>
+          <td class="head_td">踏面</td>
         </tr>
         <tr>
-          <td>温升报警</td>
+          <td class="head_td">温升报警</td>
           <td>{{ condition.temp_rise_alarm_cnt }}次</td>
           <td>预警</td>
           <td>{{ condition.vibration_alarm_info.gear.early_warn_cnt }}次</td>
@@ -28,7 +29,7 @@
           <td>{{ condition.vibration_alarm_info.tread.early_warn_cnt }}次</td>
         </tr>
         <tr>
-          <td>最高轴温</td>
+          <td class="head_td">最高轴温</td>
           <td>{{ condition.max_axle_temp }}℃</td>
           <td>I级</td>
           <td>{{ condition.vibration_alarm_info.gear.class_a_cnt }}次</td>
@@ -36,7 +37,7 @@
           <td>{{ condition.vibration_alarm_info.tread.class_a_cnt }}次</td>
         </tr>
         <tr>
-          <td>最大温升</td>
+          <td class="head_td">最大温升</td>
           <td>{{ condition.max_temp_rise }}K</td>
           <td>II级</td>
           <td>{{ condition.vibration_alarm_info.gear.class_b_cnt }}次</td>
@@ -44,11 +45,11 @@
           <td>{{ condition.vibration_alarm_info.tread.class_b_cnt }}次</td>
         </tr>
         <tr>
-          <td>前置处理器故障</td>
+          <td class="head_td">前置处理器故障</td>
           <td>{{ condition.pre_processor_failure_cnt }}次</td>
-          <td>复合处理器故障</td>
+          <td class="head_td">复合处理器故障</td>
           <td>{{ condition.composite_sensor_failure_cnt }}次</td>
-          <td>开关机</td>
+          <td class="head_td">开关机</td>
           <td>{{ condition.switch_cnt }}次</td>
         </tr>
       </table>
@@ -95,5 +96,8 @@ export default {
 <style lang="scss" scoped>
   .condition-container{
     padding-top: 20px;
+  }
+  .head_td{
+    background-color:rgba(0, 255, 255, 0.801)
   }
 </style>
