@@ -10,7 +10,7 @@ module.exports = [
       var list = []
       for (var i = 0; i < pageSize; i++) {
         var item = {
-          id: 12345,
+          id: i+100,
           train_mode: 'HXD1',
           train_number: '1625B',
           data_stime: '@datetime',

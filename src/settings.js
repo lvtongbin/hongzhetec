@@ -1,5 +1,5 @@
 module.exports = {
-  title: '鸿哲科技',
+  title: '地面监控系统',
 
   /**
    * @type {boolean} true | false

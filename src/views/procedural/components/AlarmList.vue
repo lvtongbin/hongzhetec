@@ -2,12 +2,14 @@
   <div class="alarm-list-container">
     <el-table
       :data="alarmList"
+      :header-cell-style="{background:'#eef1f6',color:'#606266'}"
       style="width: 100%;"
       height="500"
     >
       <el-table-column
         prop="index"
         label="序号"
+        class="head_td"
       />
       <el-table-column
         prop="axis"
@@ -72,5 +74,8 @@ export default {
 <style lang="scss" scoped>
   .alarm-list-container{
     padding-top: 20px;
+  }
+  .head_td{
+    background-color:rgba(0, 255, 255, 0.801)
   }
 </style>
